@@ -1,8 +1,3 @@
 module.exports = {
-    "plugins": [
-        "security"
-      ],
-      "extends": [
-        "plugin:security/recommended"
-      ]
+    "extends": "../.eslintrc.js",
 }
