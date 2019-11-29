@@ -6,3 +6,8 @@ exports.pluralize = function (count, singular, plural) {
   return `${count} ${plural}`;
 };
 
+exports.sum = function (a,b) {
+  return a+b;
+};
+
+
