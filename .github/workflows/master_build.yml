@@ -1,6 +1,9 @@
-name: Node CI
+name: Master Build
 
-on: [push]
+on:
+  commit:
+    branches:
+      - master
 
 jobs:
   build:
@@ -18,6 +21,12 @@ jobs:
       run: |
         npm install
         npm run coverage-to-codacy
+        cov=$(curl -s -X GET https://api.codacy.com/2.0/project \
+          -H 'Accept: application/json' \
+          -H 'project_token:  ${{ secrets.CODACY_TOKEN }}' | jq -r '.commit.commit.coverage')
+        if [ "$a" -lt 50 ]; then
+          echo "Coverage not acceptable"
+        fi
       env:
         CI: true
 
