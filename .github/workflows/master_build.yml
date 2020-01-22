@@ -25,14 +25,14 @@ jobs:
         npm run coverage-to-codacy
         cov=$(curl -s -X GET https://api.codacy.com/2.0/project \
           -H 'Accept: application/json' \
-          -H 'project_token:  ${{ secrets.CODACY_TOKEN }}' | jq -r '.commit.commit.coverage')
+          -H 'project_token: ${{ secrets.CODACY_TOKEN }}' | jq -r '.commit.commit.coverage')
         echo $cov
         if [[ "$cov" -lt "20" ]]
           then
-            echo "Coverage not acceptable"
+            echo -e "\e[1;31m Value $cov is below the expected and the build will stop. \e[0m"
             exit 1
           else
-            echo "All done"
+            echo -e "\e[1;42m Value $cov is ok. Build will continue. \e[0m"
         fi
       env:
         CI: true
