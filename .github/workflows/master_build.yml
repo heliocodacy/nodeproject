@@ -25,7 +25,7 @@ jobs:
         sh -c "cov=$(curl -s -X GET https://api.codacy.com/2.0/project \
           -H 'Accept: application/json' \
           -H 'project_token:  ${{ secrets.CODACY_TOKEN }}' | jq -r '.commit.commit.coverage')
-        if [ $cov < 50 ]
+        if [ $cov < \"50\" ]
           then
             echo \"Coverage not acceptable\"
           else
