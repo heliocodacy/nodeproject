@@ -22,13 +22,13 @@ jobs:
         npm install
         npm run coverage-to-codacy
         set -e
-        sh -c ("cov=$(curl -s -X GET https://api.codacy.com/2.0/project \
+        sh -c "cov=$(curl -s -X GET https://api.codacy.com/2.0/project \
           -H 'Accept: application/json' \
           -H 'project_token:  ${{ secrets.CODACY_TOKEN }}' | jq -r '.commit.commit.coverage')
         if [ $cov < 50 ]
           then
             echo "Coverage not acceptable"
-        fi")
+        fi"
       env:
         CI: true
 
