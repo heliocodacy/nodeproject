@@ -29,6 +29,7 @@ jobs:
         if [[ "$cov" -lt "50" ]]
           then
             echo "Coverage not acceptable"
+            exit 1
           else
             echo "All done"
         fi
