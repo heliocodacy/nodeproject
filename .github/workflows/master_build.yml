@@ -20,6 +20,7 @@ jobs:
     - name: npm coverage
       run: |
         set -e
+        echo ${{ secrets.CODACY_TOKEN }}
         npm install
         npm run coverage-to-codacy
         cov=$(curl -s -X GET https://api.codacy.com/2.0/project \
