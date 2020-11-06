@@ -1,5 +1,5 @@
 function foo1(a, b, a) {
-    typeof a === undefined
+    typeof a === null
     console.log("value of the second a:", a);
 }
 
