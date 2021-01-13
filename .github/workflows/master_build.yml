@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    
     - name: npm coverage
       run: |
         set -e
@@ -34,6 +35,7 @@ jobs:
         fi
       env:
         CI: true
+    
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@1.26.0
       env:
@@ -41,5 +43,12 @@ jobs:
         WITH_V: true
         INITIAL_VERSION: 0.3.0
         DRY_RUN: true
-
+    
+    - name: Report Changes and Deployment to Pulse
+      run: |
+        curl -fsSL -o pulse-event-cli https://dl.bintray.com/codacy/pulse/event-cli/1.7.3/pulse-event-cli_darwin_amd64/pulse-event-cli
+        chmod +x pulse-event-cli
+        ./pulse-event-cli help
+      env:
+        CI: true
   
