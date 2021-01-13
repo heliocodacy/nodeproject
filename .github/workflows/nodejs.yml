@@ -20,5 +20,4 @@ jobs:
         npm run coverage-to-codacy
       env:
         CI: true
-
   

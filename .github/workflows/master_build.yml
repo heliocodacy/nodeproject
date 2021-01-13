@@ -46,9 +46,14 @@ jobs:
     
     - name: Report Changes and Deployment to Pulse
       run: |
-        curl -fsSL -o pulse-event-cli https://dl.bintray.com/codacy/pulse/event-cli/1.7.3/pulse-event-cli_darwin_amd64/pulse-event-cli
+        curl -fsSL -o pulse-event-cli https://dl.bintray.com/codacy/pulse/event-cli/1.7.3/pulse-event-cli_linux_386/pulse-event-cli
         chmod +x pulse-event-cli
-        ./pulse-event-cli help
+        ./pulse-event-cli push git deployment \
+          --api-key "${{ secrets.PULSE_TOKEN }}" \
+          --previous-deployment-ref "$(git rev-parse HEAD^1)" \
+          --identifier "$(git rev-parse HEAD)" \
+          --timestamp "$(date +%s)" \
+          --system "nodeproject"
       env:
         CI: true
   
