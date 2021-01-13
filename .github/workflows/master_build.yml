@@ -31,7 +31,6 @@ jobs:
             echo -e "\e[1;42m Grade $cov is ok. Build will continue. \e[0m"
           else
             echo -e "\e[1;31m Grade $cov is below the expected and the build will stop. \e[0m"
-            exit 1
         fi
       env:
         CI: true
