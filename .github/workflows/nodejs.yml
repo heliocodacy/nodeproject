@@ -25,7 +25,8 @@ jobs:
       run: |
         curl -fsSL -o pulse-event-cli https://dl.bintray.com/codacy/pulse/event-cli/1.7.3/pulse-event-cli_linux_386/pulse-event-cli
         chmod +x pulse-event-cli
-        ./pulse-event-cli help
+          echo "$(git rev-parse HEAD^1)"
+          echo "$(git rev-parse HEAD)"
       env:
         CI: true
 
