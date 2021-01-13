@@ -20,5 +20,13 @@ jobs:
         npm run coverage-to-codacy
       env:
         CI: true
+        
+    - name: Report Changes and Deployment to Pulse
+      run: |
+        curl -fsSL -o pulse-event-cli https://dl.bintray.com/codacy/pulse/event-cli/1.7.3/pulse-event-cli_darwin_amd64/pulse-event-cli
+        chmod +x pulse-event-cli
+        ./pulse-event-cli help
+      env:
+        CI: true
 
   
