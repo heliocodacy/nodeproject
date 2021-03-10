@@ -71,7 +71,7 @@ exports.pluralize_v2 = function (count, singular, plural) {
   return `${count} ${plural}`;
 };
 
-exports.method = function (count) {
+exports.method = function (count) { 
   for(let i = 0; i < count; i++){
     const j = 9
     while(j>count){
