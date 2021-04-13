@@ -75,6 +75,7 @@ jobs:
         commit_message: "Update README.md with Project Grade"
         branch: master
         file_pattern: README.md
+        push_options: --force
 
 
   upload-to-pulse:
