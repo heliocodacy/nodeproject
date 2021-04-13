@@ -15,11 +15,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: ${{ github.head_ref }}
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Update README.md with Project Grade"
-        branch: master
-        file_pattern: README.md
+    
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -52,6 +48,22 @@ jobs:
         INITIAL_VERSION: 0.3.0
         DRY_RUN: true
     
+    
+
+    - name: update README.md with codacy status
+      run: |
+        RESULT=$(cat api.json | jq -r -j '["Grade: \(.data.grade) |", "Issues (%): \(.data.issuesPercentage) |", "Complex Files (%): \(.data.complexFilesPercentage) |", "Coverage (%): \(.data.coverage.coveragePercentage)"]' | tr -d \" | tr -d \[ | tr  -d \] | tr -d , | tr -d '\n')
+        sed -i ":a;N;\$!ba;s/\(<!-- codacy-status -->\).*\(<!-- \/codacy-status -->\)/\1 \n$RESULT\n \2/g" README.md
+      env:
+        CI: true
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Update README.md with Project Grade"
+        branch: master
+        file_pattern: README.md
+
+
     - name: Report Changes and Deployment to Pulse
       run: |
         curl -fsSL -o pulse-event-cli https://dl.bintray.com/codacy/pulse/event-cli/1.7.3/pulse-event-cli_linux_386/pulse-event-cli
@@ -62,13 +74,6 @@ jobs:
           --identifier "$(git rev-parse HEAD)" \
           --timestamp "$(date +%s)" \
           --system "nodeproject"
-      env:
-        CI: true
-
-    - name: update README.md with codacy status
-      run: |
-        RESULT=$(cat api.json | jq -r -j '["Grade: \(.data.grade) |", "Issues (%): \(.data.issuesPercentage) |", "Complex Files (%): \(.data.complexFilesPercentage) |", "Coverage (%): \(.data.coverage.coveragePercentage)"]' | tr -d \" | tr -d \[ | tr  -d \] | tr -d , | tr -d '\n')
-        sed -i ":a;N;\$!ba;s/\(<!-- codacy-status -->\).*\(<!-- \/codacy-status -->\)/\1 \n$RESULT\n \2/g" README.md
       env:
         CI: true
 
