@@ -1,0 +1,27 @@
+name: Update Readme
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+     - uses: actions/checkout@v2
+       with:
+        ref: ${{ github.head_ref }}
+     - name: update README.md with codacy status
+       run: |
+          RESULT=$(cat api.json | jq -r -j '["Grade: \(.data.grade) |", "Issues (%): \(.data.issuesPercentage) |", "Complex Files (%): \(.data.complexFilesPercentage) |", "Coverage (%): \(.data.coverage.coveragePercentage)"]' | tr -d \" | tr -d \[ | tr  -d \] | tr -d , | tr -d '\n')
+          sed -i ":a;N;\$!ba;s/\(<!-- codacy-status -->\).*\(<!-- \/codacy-status -->\)/\1 \n$RESULT\n \2/g" README.md
+       env:
+        CI: true
+     - uses: stefanzweifel/git-auto-commit-action@v4
+       with:
+        commit_message: "Update README.md with Project Grade"
+        branch: master
+        file_pattern: README.md
+        push_options: --force
