@@ -21,6 +21,4 @@ jobs:
      - uses: stefanzweifel/git-auto-commit-action@v4
        with:
         commit_message: "Update README.md with Project Grade"
-        branch: master
         file_pattern: README.md
-        push_options: --force
