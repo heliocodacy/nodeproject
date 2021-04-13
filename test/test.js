@@ -11,6 +11,10 @@ describe('example', function () {
       assert.strictEqual(pluralize(1, 'cat'), '1 cat');
     });
 
+    it('keeps singular when count is 1', function () {
+      assert.strictEqual(pluralize(1, 'cat'), '1 cat');
+    });
+
     it('goes plural when count is 2', function () {
       assert.strictEqual(pluralize(2, 'cat', 'cats'), '2 cats');
     });
