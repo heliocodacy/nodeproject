@@ -3,7 +3,7 @@
 # nodeproject
 
 <!-- codacy-status --> 
-  Grade: 80 |  Issues (%): 37 |  Complex Files (%): 0 |  Coverage (%): 39
+  Grade: 80 |  Issues: 37% |  Complex Files: 0% |  Coverage: 39%
  <!-- /codacy-status -->
 
 ## the description of this project
