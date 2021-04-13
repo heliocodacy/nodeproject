@@ -15,9 +15,6 @@ jobs:
      - name: update README.md with codacy status
        run: |
           ANALYZED="false"
-          echo $GITHUB_SHA
-          echo https://app.codacy.com/api/v3/analysis/organizations/gh/codacy-acme/repositories/nodeproject/commits/${GITHUB_SHA}/deltaStatistics
-          curl -X GET https://app.codacy.com/api/v3/analysis/organizations/gh/codacy-acme/repositories/nodeproject/commits/${GITHUB_SHA}/deltaStatistics -H 'api-token: ${API_TOKEN}'
           retries=0
           while [ $ANALYZED != "true" ]
           do
@@ -27,7 +24,7 @@ jobs:
           if [ "$retries" -gt "2" ]; then
             exit 0
           fi
-          ANALYZED=$(curl -X GET https://app.codacy.com/api/v3/analysis/organizations/gh/codacy-acme/repositories/nodeproject/commits/${GITHUB_SHA}/deltaStatistics -H 'api-token: ${API_TOKEN}' | jq '.analyzed')
+          ANALYZED=$(curl -X GET https://app.codacy.com/api/v3/analysis/organizations/gh/codacy-acme/repositories/nodeproject/commits/${GITHUB_SHA}/deltaStatistics -H 'api-token: ${{ secrets.API_TOKEN }}' | jq '.analyzed')
           done
           RESULT=$(curl https://app.codacy.com/api/v3/analysis/organizations/gh/codacy-acme/repositories/nodeproject | jq -r -j '["Grade: \(.data.grade) |", "Issues (%): \(.data.issuesPercentage) |", "Complex Files (%): \(.data.complexFilesPercentage) |", "Coverage (%): \(.data.coverage.coveragePercentage)"]' | tr -d \" | tr -d \[ | tr  -d \] | tr -d , | tr -d '\n')
           sed -i ":a;N;\$!ba;s/\(<!-- codacy-status -->\).*\(<!-- \/codacy-status -->\)/\1 \n$RESULT\n \2/g" README.md
