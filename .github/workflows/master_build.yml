@@ -59,7 +59,9 @@ jobs:
 
     - name: update README.md with codacy status
       run: |
-      RESULT=$(cat api.json | jq -r -j '["Grade: \(.data.grade) |", "Issues (%): \(.data.issuesPercentage) |", "Complex Files (%): \(.data.complexFilesPercentage) |", "Coverage (%): \(.data.coverage.coveragePercentage)"]' | tr -d \" | tr -d \[ | tr  -d \] | tr -d , | tr -d '\n')
-      sed -i ":a;N;\$!ba;s/\(<!-- codacy-status -->\).*\(<!-- \/codacy-status -->\)/\1 \n$RESULT\n \2/g" README.md
+        RESULT=$(cat api.json | jq -r -j '["Grade: \(.data.grade) |", "Issues (%): \(.data.issuesPercentage) |", "Complex Files (%): \(.data.complexFilesPercentage) |", "Coverage (%): \(.data.coverage.coveragePercentage)"]' | tr -d \" | tr -d \[ | tr  -d \] | tr -d , | tr -d '\n')
+        sed -i ":a;N;\$!ba;s/\(<!-- codacy-status -->\).*\(<!-- \/codacy-status -->\)/\1 \n$RESULT\n \2/g" README.m
+       env:
+        CI: true
 
   
