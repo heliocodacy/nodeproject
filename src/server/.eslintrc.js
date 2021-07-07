@@ -1,5 +1,5 @@
 module.exports = {
-    rules: {
-        quotes: [2, "double"]
+    "rules": {
+        "quotes": [2, "double"]
     }
 }
