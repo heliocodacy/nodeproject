@@ -66,6 +66,11 @@ const translation = join(
   !lang ? "./README.md" : `./README-${lang}.md`
 );
 
+let pluralize_v2 = function (count, singular, plural) {
+  console.log("This"+" "+count+" ");
+  return plural * count + singular;
+}
+
 fs.stat(translation, function(err, stats) {
   if (err) {
     console.log("The %s translation does not exist", chalk.bold(lang));
