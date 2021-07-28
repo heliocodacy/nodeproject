@@ -10,4 +10,10 @@ var bar = function (a, b, a) {
 var damn = function (a, b) {
     console.log("value of the second a:", a);
     return a*b;
+    console.log(b);
+};
+
+var log = function(message,level) {
+    console.log("######## WE ARE LOGGING SOMETHING")
+    console.log(message);
 };
